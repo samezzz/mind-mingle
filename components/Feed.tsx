@@ -3,9 +3,14 @@
 import { useState, useEffect } from 'react';
 import PromptCard from './PromptCard';
 
-const PromptCardList = ({ data, handleTagClick }) => {
+type Props = {
+  data: any
+  handleTagClick: () => any
+}
+
+const PromptCardList = ({ data, handleTagClick }: Props) => {
   return (
-    <div className="mt-16">
+    <div className="mt-16 prompt_layout">
       {data.map((post) => (
         <PromptCard
           key={post._id}
@@ -72,7 +77,7 @@ export default function Feed() {
   };
 
   return (
-    <section className="">
+    <section className="feed">
       <form action="" className="relative w-full flex-center">
         <input
           type="text"
@@ -80,7 +85,7 @@ export default function Feed() {
           value={searchText}
           onChange={handleSearchChange}
           required
-          className=""
+          className="search_input_peer"
         />
       </form>
 

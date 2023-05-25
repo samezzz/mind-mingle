@@ -35,11 +35,11 @@ export default function Nav() {
         {
           session?.user ? (
             <div className="flex gap-3 md:gap-5">
-              <Link href="/create-idea" className="">
+              <Link href="/create-idea" className="black_btn">
                 Create Idea
               </Link>
 
-              <button type="button" onClick={signOut} className="">
+              <button type="button" onClick={signOut} className="outline_btn">
                 Sign Out
               </button>
 
@@ -125,7 +125,7 @@ export default function Nav() {
                       type="button"
                       key={provider.name}
                       onClick={() => signIn(provider.id)}
-                      className=""
+                      className="black_btn"
                     >
                       Sign In
                     </button>
