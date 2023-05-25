@@ -1,4 +1,4 @@
-import Feed from "./components/Feed";
+import Feed from "../components/Feed";
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
       <p className="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, maiores doloribus iusto cumque modi harum illo, excepturi, aliquam odit corrupti blanditiis.
       </p>
 
-      <Feed />
+      {/* <Feed /> */}
     </section>
   )
 }

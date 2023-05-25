@@ -1,38 +1,43 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import sendMail, { sendMarketingMail } from "@/app/emails";
+import LoginLink from "@/app/emails/LoginLink";
 import WelcomeEmail from "@/app/emails/WelcomeEmail";
 import NextAuth, { type NextAuthOptions } from "next-auth";
+import GoogleProvider from 'next-auth/providers/google';
 import EmailProvider from "next-auth/providers/email";
 import prisma from "@/lib/prisma";
 import { isBlacklistedEmail } from "@/lib/utils";
-import LoginLink from "@/app/emails/LoginLink";
 
-const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
+const HOST_DEPLOYMENT = !!process.env.HOST_URL;
 
 export const authOptions: NextAuthOptions = {
   providers: [
     EmailProvider({
       sendVerificationRequest({ identifier, url }) {
         sendMail({
-          subject: "Your Dub.sh Login Link",
+          subject: "Login Link",
           to: identifier,
           component: <LoginLink url={url} />,
         });
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    })
   ],
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   cookies: {
     sessionToken: {
-      name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
+      name: `${HOST_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
         // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
-        domain: VERCEL_DEPLOYMENT ? ".dub.sh" : undefined,
-        secure: VERCEL_DEPLOYMENT,
+        domain: HOST_DEPLOYMENT ? "localhost:3000" : undefined,
+        secure: HOST_DEPLOYMENT,
       },
     },
   },

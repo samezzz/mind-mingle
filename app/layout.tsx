@@ -1,7 +1,9 @@
 import './globals.css'
-import Nav from './components/Nav'
+import Nav from '../components/Nav'
+import Footer from '../components/Footer'
 import { Inter } from 'next/font/google'
-import Provider from './components/Provider'
+import Provider from '../components/Provider'
+import type { Session } from "next-auth";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,14 +13,15 @@ export const metadata = {
 }
 
 export default function RootLayout({
-  children,
+  children, session
 }: {
   children: React.ReactNode
+  session: Session
 }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider>
+        <Provider session={session}>
           <div className="main">
             <div className="gradient" />
           </div>
@@ -26,6 +29,7 @@ export default function RootLayout({
           <main className="app">
             <Nav />
             {children}
+            <Footer />
           </main>
         </Provider>
       </body>
