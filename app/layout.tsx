@@ -3,8 +3,6 @@ import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import { Inter } from 'next/font/google'
 import Provider from '../components/Provider'
-import type { Session } from "next-auth";
-
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -13,15 +11,15 @@ export const metadata = {
 }
 
 export default function RootLayout({
-  children, session
+  children
 }: {
   children: React.ReactNode
-  session: Session
 }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider session={session}>
+        {/* @ts-expect-error */}
+        <Provider>
           <div className="main">
             <div className="gradient" />
           </div>
